@@ -1,0 +1,7 @@
+.bundle
+*~
+.project
+.DS_Store
+.settings/
+html-template/
+bin-debug/
