@@ -1,8 +1,12 @@
 package com.infinitelooptd.view
 {
 	import com.infinitelooptd.model.GameProxy;
+	import com.infinitelooptd.utils.Time;
 	import com.infinitelooptd.view.component.BasicCreepView;
 	import com.infinitelooptd.view.component.CreepView;
+	
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
 	
 	import org.puremvc.as3.interfaces.IMediator;
 	import org.puremvc.as3.interfaces.INotification;
@@ -12,20 +16,32 @@ package com.infinitelooptd.view
 	{
 		public static const NAME:String		= 'CreepViewMediator';
 		
+		protected var _creepCreator:Timer;
+		
 		public function CreepViewMediator(viewComponent:Object=null)
 		{
 			super(NAME, viewComponent);
 		}
 		
 		override public function onRegister():void
-		{	
+		{
+			sendNotification( BasicCreepView.CREATE, viewComponent );
+			
+			_creepCreator = new Timer(1000);
+			_creepCreator.addEventListener(TimerEvent.TIMER, addCreep);
+			_creepCreator.start();
+		}
+		
+		protected function addCreep(event:TimerEvent):void
+		{
 			sendNotification( BasicCreepView.CREATE, viewComponent );
 		}
 		
 		override public function listNotificationInterests():Array
 		{
 			return [
-				BasicCreepView.MOVE
+				BasicCreepView.MOVE,
+				BasicCreepView.DIE
 			];
 		}
 		
@@ -44,6 +60,8 @@ package com.infinitelooptd.view
 							item.move();
 						}
 					}
+					break;
+				case BasicCreepView.DIE:
 					break;
 			}
 		}

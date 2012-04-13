@@ -1,7 +1,6 @@
 package com.infinitelooptd.view
 {
 	import com.infinitelooptd.ApplicationFacade;
-	import com.infinitelooptd.view.component.BasicCreepView;
 	import com.infinitelooptd.view.component.BattleView;
 	
 	import flash.events.Event;

@@ -4,8 +4,6 @@ package com.infinitelooptd.controller
 	import com.infinitelooptd.view.component.BasicCreepView;
 	import com.infinitelooptd.view.component.BasicTowerView;
 	
-	import flash.geom.Point;
-	
 	import org.puremvc.as3.interfaces.ICommand;
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.command.SimpleCommand;

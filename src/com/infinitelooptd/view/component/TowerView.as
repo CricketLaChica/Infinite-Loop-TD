@@ -13,6 +13,8 @@ package com.infinitelooptd.view.component
 		protected var _turretRotation:Number;
 		protected var _allowMove:Boolean;
 		
+		protected var _power:Number 			= 1;
+		
 		public function TowerView()
 		{
 		
@@ -31,12 +33,18 @@ package com.infinitelooptd.view.component
 		
 		public function move():void
 		{
+			specificMove();
+		}
+		
+		protected function specificMove():void
+		{
 			
 		}
 		
 		protected function enableMove(event:MouseEvent):void
 		{
 			this.allowMove = true;
+			this.power+=1;
 		}
 		
 		protected function disableMove(event:MouseEvent):void
@@ -50,6 +58,8 @@ package com.infinitelooptd.view.component
 			{
 				this.x = event.stageX;
 				this.y = event.stageY;
+				
+				event.updateAfterEvent();
 			}
 		}
 		
@@ -77,5 +87,16 @@ package com.infinitelooptd.view.component
 		{
 			_allowMove = value;
 		}
+
+		public function get power():Number
+		{
+			return _power;
+		}
+
+		public function set power(value:Number):void
+		{
+			_power = value;
+		}
+
 	}
 }

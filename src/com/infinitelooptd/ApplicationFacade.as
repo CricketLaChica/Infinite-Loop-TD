@@ -3,6 +3,7 @@ package com.infinitelooptd
 	import com.infinitelooptd.controller.CreateCreepCommand;
 	import com.infinitelooptd.controller.CreateTowerCommand;
 	import com.infinitelooptd.controller.GameLoopCommand;
+	import com.infinitelooptd.controller.KillCreepCommand;
 	import com.infinitelooptd.controller.StartupCommand;
 	import com.infinitelooptd.view.component.BasicCreepView;
 	import com.infinitelooptd.view.component.BasicTowerView;
@@ -32,6 +33,7 @@ package com.infinitelooptd
 			
 			// Creeps
 			registerCommand( BasicCreepView.CREATE, CreateCreepCommand );
+			registerCommand( BasicCreepView.KILL,   KillCreepCommand );
 			
 			// Towers
 			registerCommand( BasicTowerView.CREATE, CreateTowerCommand );
