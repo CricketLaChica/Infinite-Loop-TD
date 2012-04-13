@@ -12,6 +12,8 @@ package com.infinitelooptd.view.component
 		public static const HIDE:String			= NAME + 'Hide';
 		public static const UPDATE:String		= NAME + 'Update';
 		
+		public static const CREATE_BASIC_CREEP:String		= NAME + 'CreateBasicCreep';
+		
 		public function BattleView()
 		{
 			init();

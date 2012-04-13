@@ -1,6 +1,6 @@
 package com.infinitelooptd.controller
 {
-	import com.infinitelooptd.model.DataProxy;
+	import com.infinitelooptd.model.GameProxy;
 	import com.infinitelooptd.view.ApplicationMediator;
 	
 	import flash.display.MovieClip;
@@ -13,8 +13,7 @@ package com.infinitelooptd.controller
 	{
 		override public function execute(notification:INotification):void
 		{
-			facade.registerProxy( new DataProxy() );
-			
+			facade.registerProxy( new GameProxy() );
 			facade.registerMediator( new ApplicationMediator( notification.getBody() as MovieClip ) );
 		}
 	}

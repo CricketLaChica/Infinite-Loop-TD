@@ -1,14 +1,18 @@
 package com.infinitelooptd.view
 {
+	import com.infinitelooptd.ApplicationFacade;
+	import com.infinitelooptd.view.component.BasicCreepView;
 	import com.infinitelooptd.view.component.BattleView;
 	
+	import flash.events.Event;
+	
 	import org.puremvc.as3.interfaces.IMediator;
-	import org.puremvc.as3.patterns.mediator.Mediator;
 	import org.puremvc.as3.interfaces.INotification;
+	import org.puremvc.as3.patterns.mediator.Mediator;
 	
 	public class BattleViewMediator extends Mediator implements IMediator
 	{
-		public static const NAME:String		= 'BattleViewMediator';
+		public static const NAME:String						= 'BattleViewMediator';
 		
 		private var battleView:BattleView;
 		
@@ -22,6 +26,16 @@ package com.infinitelooptd.view
 			battleView = new BattleView();
 			viewComponent.addChild( battleView );
 			trace('[BattleViewMediator] Created a new BattleView.');
+			
+			facade.registerMediator( new CreepViewMediator( viewComponent ) );
+			facade.registerMediator( new TowerViewMediator( viewComponent ) );
+			
+			viewComponent.addEventListener( Event.ENTER_FRAME, doGameLoop );
+		}
+		
+		protected function doGameLoop(event:Event):void
+		{
+			sendNotification( ApplicationFacade.GAMELOOP );
 		}
 		
 		override public function listNotificationInterests():Array
