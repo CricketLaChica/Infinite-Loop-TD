@@ -21,6 +21,8 @@ package com.infinitelooptd.view.component
 		protected var _maxLife:Number			= 100;
 		protected var _curLife:Number			= 100;
 		
+		protected var _goldValue:Number			= 5;
+		
 		public function CreepView()
 		{
 
@@ -80,6 +82,11 @@ package com.infinitelooptd.view.component
 		protected function specificMove():void
 		{
 			
+		}
+		
+		public function hitBy(power:Number):void
+		{
+			this.curLife -= power;
 		}
 
 		protected function get proxy():GameProxy
@@ -166,6 +173,16 @@ package com.infinitelooptd.view.component
 		public function set curLife(value:Number):void
 		{
 			_curLife = value;
+		}
+
+		public function get goldValue():Number
+		{
+			return _goldValue;
+		}
+
+		public function set goldValue(value:Number):void
+		{
+			_goldValue = value;
 		}
 
 

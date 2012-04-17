@@ -5,6 +5,7 @@ package com.infinitelooptd.controller
 	import com.infinitelooptd.view.ApplicationMediator;
 	import com.infinitelooptd.view.component.BasicTowerView;
 	import com.infinitelooptd.view.component.CreepView;
+	import com.infinitelooptd.view.component.LineTowerView;
 	
 	import flash.display.MovieClip;
 	
@@ -31,6 +32,17 @@ package com.infinitelooptd.controller
 					proxy.vo.towers.push( basicTowerView );
 					
 					trace('[CreepViewMediator] Created a new BasicTowerView.');
+					break;
+				case LineTowerView.CREATE:
+					var towerView = new LineTowerView();
+					towerView.init( 576,
+						400,
+						72 );
+					
+					viewComponent.addChild( towerView );
+					proxy.vo.towers.push( towerView );
+					
+					trace('[CreepViewMediator] Created a new LineTowerView.');
 					break;
 			}
 		}

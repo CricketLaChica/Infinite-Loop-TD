@@ -2,6 +2,7 @@ package com.infinitelooptd.view
 {
 	import com.infinitelooptd.model.GameProxy;
 	import com.infinitelooptd.view.component.BasicTowerView;
+	import com.infinitelooptd.view.component.LineTowerView;
 	import com.infinitelooptd.view.component.TowerView;
 	
 	import org.puremvc.as3.interfaces.IMediator;
@@ -24,13 +25,14 @@ package com.infinitelooptd.view
 			towers = new Vector.<TowerView>();
 			
 			sendNotification( BasicTowerView.CREATE, viewComponent );
-//			sendNotification( BasicTowerView.CREATE, viewComponent );
+			sendNotification( LineTowerView.CREATE, viewComponent );
 		}
 		
 		override public function listNotificationInterests():Array
 		{
 			return [
-				BasicTowerView.MOVE
+				BasicTowerView.MOVE,
+				LineTowerView.MOVE
 			];
 		}
 		
@@ -38,13 +40,23 @@ package com.infinitelooptd.view
 		{
 			var name:String = notification.getName();
 			var body:Object = notification.getBody();
+			var item:TowerView;
 			
 			switch ( name )
 			{
 				case BasicTowerView.MOVE:
-					for each (var item:TowerView in proxy.vo.towers)
+					for each (item in proxy.vo.towers)
 					{
 						if (item is BasicTowerView)
+						{
+							item.move();
+						}
+					}
+					break;
+				case LineTowerView.MOVE:
+					for each (item in proxy.vo.towers)
+					{
+						if (item is LineTowerView)
 						{
 							item.move();
 						}

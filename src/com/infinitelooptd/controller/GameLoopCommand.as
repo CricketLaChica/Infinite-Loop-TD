@@ -3,6 +3,8 @@ package com.infinitelooptd.controller
 	import com.infinitelooptd.model.GameProxy;
 	import com.infinitelooptd.view.component.BasicCreepView;
 	import com.infinitelooptd.view.component.BasicTowerView;
+	import com.infinitelooptd.view.component.BattleView;
+	import com.infinitelooptd.view.component.LineTowerView;
 	
 	import org.puremvc.as3.interfaces.ICommand;
 	import org.puremvc.as3.interfaces.INotification;
@@ -14,6 +16,8 @@ package com.infinitelooptd.controller
 		{	
 			sendNotification( BasicCreepView.MOVE );
 			sendNotification( BasicTowerView.MOVE );
+			sendNotification( LineTowerView.MOVE );
+			sendNotification( BattleView.UPDATE_TIME );
 		}
 		
 		private function get proxy():GameProxy

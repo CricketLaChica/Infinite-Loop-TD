@@ -3,7 +3,9 @@ package com.infinitelooptd.model.vo
 	import com.infinitelooptd.view.component.CreepView;
 	import com.infinitelooptd.view.component.TowerView;
 	
+	import flash.display.Shape;
 	import flash.geom.Point;
+	import flash.utils.getTimer;
 
 	public class GameVO
 	{
@@ -14,5 +16,10 @@ package com.infinitelooptd.model.vo
 		// Game Objects
 		public var creeps:Vector.<CreepView> = new Vector.<CreepView>();
 		public var towers:Vector.<TowerView> = new Vector.<TowerView>();
+		public var grid:Shape;
+		
+		// Game stats
+		public var time_start = getTimer();
+		public var gold = 100;
 	}
 }

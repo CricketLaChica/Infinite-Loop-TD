@@ -7,6 +7,7 @@ package com.infinitelooptd
 	import com.infinitelooptd.controller.StartupCommand;
 	import com.infinitelooptd.view.component.BasicCreepView;
 	import com.infinitelooptd.view.component.BasicTowerView;
+	import com.infinitelooptd.view.component.LineTowerView;
 	
 	import org.puremvc.as3.interfaces.IFacade;
 	import org.puremvc.as3.patterns.facade.Facade;
@@ -37,6 +38,7 @@ package com.infinitelooptd
 			
 			// Towers
 			registerCommand( BasicTowerView.CREATE, CreateTowerCommand );
+			registerCommand( LineTowerView.CREATE, CreateTowerCommand );
 		}
 		
 		public function startup(stage:Object):void

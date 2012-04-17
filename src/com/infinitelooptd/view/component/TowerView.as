@@ -2,6 +2,7 @@ package com.infinitelooptd.view.component
 {
 	import com.infinitelooptd.ApplicationFacade;
 	import com.infinitelooptd.model.GameProxy;
+	import com.infinitelooptd.view.BattleViewMediator;
 	
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
@@ -45,11 +46,16 @@ package com.infinitelooptd.view.component
 		{
 			this.allowMove = true;
 			this.power+=1;
+
+			ApplicationFacade.getInstance().retrieveMediator(BattleViewMediator.NAME).getViewComponent().addChildAt(proxy.vo.grid, ApplicationFacade.getInstance().retrieveMediator(BattleViewMediator.NAME).getViewComponent().getChildIndex(this));
 		}
 		
 		protected function disableMove(event:MouseEvent):void
 		{
 			this.allowMove = false;
+			this.x = proxy.vo.grid.x + 48;
+			this.y = proxy.vo.grid.y + 48;
+			ApplicationFacade.getInstance().retrieveMediator(BattleViewMediator.NAME).getViewComponent().removeChild(proxy.vo.grid);
 		}
 		
 		protected function moveTower(event:MouseEvent):void

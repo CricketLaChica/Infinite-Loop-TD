@@ -3,6 +3,7 @@ package com.infinitelooptd.controller
 	import com.infinitelooptd.model.DataProxy;
 	import com.infinitelooptd.model.GameProxy;
 	import com.infinitelooptd.view.component.BasicCreepView;
+	import com.infinitelooptd.view.component.BattleView;
 	import com.infinitelooptd.view.component.CreepView;
 	
 	import flash.display.MovieClip;
@@ -31,6 +32,8 @@ package com.infinitelooptd.controller
 					trace('[CreepViewMediator] Killed a BasicCreepView.');
 					break;
 			}
+			
+			sendNotification( BattleView.ADD_GOLD, creep.goldValue );
 		}
 		
 		private function get proxy():GameProxy
