@@ -20,16 +20,9 @@ package com.infinitelooptd.view.component
 			super();
 		}
 		
-		override public function init( posX:Number = 0, posY:Number = 0, rotation:Number = 0 ):void
+		override public function specificInit():void
 		{
-			this.x = posX;
-			this.y = posY;
-			this.turretRotation = rotation;
-			this.turret.rotation = rotation;
-			
-			this.addEventListener(MouseEvent.MOUSE_DOWN, enableMove);
-			this.addEventListener(MouseEvent.MOUSE_UP, disableMove);
-			this.addEventListener(MouseEvent.MOUSE_MOVE, moveTower);
+			this.turret.rotation = this.turretRotation;
 
 			bullets = new Vector.<MovieClip>();
 		}
@@ -39,21 +32,38 @@ package com.infinitelooptd.view.component
 			if (proxy.vo.creeps.length > 0 )
 			{
 				// Grab a target
-				var creep = proxy.vo.creeps[0];
-				creep.beingHit = this.power;
+				var creep:CreepView; // = proxy.vo.creeps[0];
+				for (var i:int = 0; i < proxy.vo.creeps.length; i++) 
+				{
+					if (canShoot(proxy.vo.creeps[i]))
+					{
+						creep = proxy.vo.creeps[i];
+						break;
+					}
+				}
 				
-				this.turretRotation = ( 
-					Math.atan2(	creep.y - this.y,
-						creep.x - this.x )
-					/ Math.PI ) * 180 + 180;
-				
-				this.turret.rotation = this.turretRotation;
-				
-				bullet = getBullet();
-				bullet.graphics.clear();
-				bullet.graphics.lineStyle(2, 0xCCFF00, 100);
-				bullet.graphics.moveTo( 0, 0 );
-				bullet.graphics.lineTo( creep.x - this.x, creep.y - this.y );
+				if (creep != null)
+				{
+					creep.beingHit = this.power;
+					
+					this.turretRotation = ( 
+						Math.atan2(	creep.y - this.y,
+							creep.x - this.x )
+						/ Math.PI ) * 180 + 180;
+					
+					this.turret.rotation = this.turretRotation;
+					
+					bullet = getBullet();
+					bullet.graphics.clear();
+					bullet.graphics.lineStyle(2, 0xCCFF00, 100);
+					bullet.graphics.moveTo( 0, 0 );
+					bullet.graphics.lineTo( creep.x - this.x, creep.y - this.y );
+				}
+				else
+				{
+					bullet = getBullet();
+					bullet.graphics.clear();
+				}
 			}
 			else
 			{

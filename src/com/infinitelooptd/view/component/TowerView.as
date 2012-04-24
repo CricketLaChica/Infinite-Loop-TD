@@ -5,6 +5,8 @@ package com.infinitelooptd.view.component
 	import com.infinitelooptd.view.BattleViewMediator;
 	
 	import flash.display.MovieClip;
+	import flash.display.Shape;
+	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
 	public class TowerView extends MovieClip
@@ -15,6 +17,9 @@ package com.infinitelooptd.view.component
 		protected var _allowMove:Boolean;
 		
 		protected var _power:Number 			= 1;
+		protected var _range:Number				= 1;
+		
+		private var _rangeShape:Sprite;
 		
 		public function TowerView()
 		{
@@ -27,9 +32,29 @@ package com.infinitelooptd.view.component
 			this.y = posY;
 			this.turretRotation = rotation;
 			
+			// Create range shape
+			_rangeShape = new Sprite();
+			_rangeShape.graphics.lineStyle(2, 0x000000, 1);
+			_rangeShape.graphics.beginFill(0x000000, 0.2);
+			_rangeShape.graphics.drawCircle(0, 0, (range * proxy.vo.gridSize) + (proxy.vo.gridSize / 2) );
+			_rangeShape.graphics.endFill();
+			_rangeShape.mouseEnabled = false;
+			_rangeShape.mouseChildren = false;
+			 _rangeShape.visible = false;
+			this.addChildAt(_rangeShape, 0);
+			
 			this.addEventListener(MouseEvent.MOUSE_DOWN, enableMove);
 			this.addEventListener(MouseEvent.MOUSE_UP, disableMove);
 			this.addEventListener(MouseEvent.MOUSE_MOVE, moveTower);
+			this.addEventListener(MouseEvent.MOUSE_OVER, showRange);
+			this.addEventListener(MouseEvent.MOUSE_OUT, hideRange);
+			
+			specificInit();
+		}
+		
+		public function specificInit():void
+		{
+			
 		}
 		
 		public function move():void
@@ -69,6 +94,23 @@ package com.infinitelooptd.view.component
 			}
 		}
 		
+		protected function showRange(event:MouseEvent):void
+		{
+			_rangeShape.visible = true;
+		}
+		
+		protected function hideRange(event:MouseEvent):void
+		{
+			_rangeShape.visible = false;
+		}
+		
+		protected function canShoot(creep:CreepView):Boolean {
+			var dx:Number = creep.x - x;
+			var dy:Number = creep.y - y;
+			if (Math.sqrt(dx * dx + dy * dy) <= (range * proxy.vo.gridSize) + (proxy.vo.gridSize / 2)) return true;
+			else return false;
+		}
+		
 		protected function get proxy():GameProxy
 		{
 			return ApplicationFacade.getInstance().retrieveProxy( GameProxy.NAME ) as GameProxy;
@@ -103,6 +145,17 @@ package com.infinitelooptd.view.component
 		{
 			_power = value;
 		}
+
+		public function get range():Number
+		{
+			return _range;
+		}
+
+		public function set range(value:Number):void
+		{
+			_range = value;
+		}
+
 
 	}
 }

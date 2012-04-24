@@ -23,18 +23,11 @@ package com.infinitelooptd.view.component
 		{
 			super();
 		}
-		
-		override public function init( posX:Number = 0, posY:Number = 0, rotation:Number = 0 ):void
+
+		override public function specificInit():void
 		{
-			this.x = posX;
-			this.y = posY;
-			this.turretRotation = rotation;
-			this.turret.rotation = rotation;
+			this.turret.rotation = this.turretRotation;
 			this.power = 10;
-			
-			this.addEventListener(MouseEvent.MOUSE_DOWN, enableMove);
-			this.addEventListener(MouseEvent.MOUSE_UP, disableMove);
-			this.addEventListener(MouseEvent.MOUSE_MOVE, moveTower);
 
 			bullets = new Vector.<Shape>();
 		}
@@ -44,26 +37,41 @@ package com.infinitelooptd.view.component
 			if (proxy.vo.creeps.length > 0 )
 			{
 				// Grab a target
-				var creep = proxy.vo.creeps[0];
-				
-				this.turretRotation = ( 
-					Math.atan2(	creep.y - this.y,
-						creep.x - this.x )
-					/ Math.PI ) * 180 + 180;
-				
-				this.turret.rotation = this.turretRotation;
-				
-				var localCreep = this.globalToLocal( new Point(creep.x, creep.y) );
-				
-				bullet = getBullet(localCreep);
-				TweenMax.to( bullet, 1, {x: localCreep.x, y: localCreep.y} );
-				
-				if (bullet.hitTestObject(creep))
+				var creep:CreepView; // = proxy.vo.creeps[0];
+				for (var i:int = 0; i < proxy.vo.creeps.length; i++) 
 				{
-					creep.hitBy(this.power);
+					if (canShoot(proxy.vo.creeps[i]))
+					{
+						creep = proxy.vo.creeps[i];
+						break;
+					}
+				}
+				
+				if (creep != null)
+				{
+					this.turretRotation = ( 
+						Math.atan2(	creep.y - this.y,
+							creep.x - this.x )
+						/ Math.PI ) * 180 + 180;
+					
+					this.turret.rotation = this.turretRotation;
+					
+					var localCreep = this.globalToLocal( new Point(creep.x, creep.y) );
+					
+					bullet = getBullet(localCreep);
+					TweenMax.to( bullet, 1, {x: localCreep.x, y: localCreep.y} );
+					
+					if (bullet.hitTestObject(creep))
+					{
+						creep.hitBy(this.power);
+						removeBullet(bullet);
+					}
+				}
+				else
+				{
+					bullet = getBullet();
 					removeBullet(bullet);
 				}
-//				trace("going to: " + (localCreep.x) + ", " + (localCreep.y));
 			}
 			else
 			{

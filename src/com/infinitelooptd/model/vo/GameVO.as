@@ -12,6 +12,7 @@ package com.infinitelooptd.model.vo
 		// Global Game Settings
 		public var margin:Point = new Point(32, 32);
 		public var gameSpeed:Number = 1;
+		public var gridSize:uint	= 96;
 		
 		// Game Objects
 		public var creeps:Vector.<CreepView> = new Vector.<CreepView>();
@@ -19,7 +20,7 @@ package com.infinitelooptd.model.vo
 		public var grid:Shape;
 		
 		// Game stats
-		public var time_start = getTimer();
-		public var gold = 100;
+		public var time_start:int = getTimer();
+		public var gold:uint = 100;
 	}
 }
