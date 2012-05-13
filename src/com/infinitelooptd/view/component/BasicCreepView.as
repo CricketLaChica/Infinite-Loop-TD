@@ -33,6 +33,7 @@ package com.infinitelooptd.view.component
 			else
 			{
 				this.curLife -= beingHit;
+				this.beingHit = 0;
 				this.lifebar.life.width = 50 * this.curLife / this.maxLife;
 			}
 		}

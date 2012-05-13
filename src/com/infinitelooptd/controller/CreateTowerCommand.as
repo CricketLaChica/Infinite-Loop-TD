@@ -3,9 +3,11 @@ package com.infinitelooptd.controller
 	import com.infinitelooptd.model.DataProxy;
 	import com.infinitelooptd.model.GameProxy;
 	import com.infinitelooptd.view.ApplicationMediator;
+	import com.infinitelooptd.view.TowerViewMediator;
 	import com.infinitelooptd.view.component.BasicTowerView;
 	import com.infinitelooptd.view.component.CreepView;
 	import com.infinitelooptd.view.component.LineTowerView;
+	import com.infinitelooptd.view.component.TowerView;
 	
 	import flash.display.MovieClip;
 	
@@ -19,13 +21,14 @@ package com.infinitelooptd.controller
 		{	
 			var name:String = notification.getName();
 			var viewComponent:Object = notification.getBody();
+			var type:String = notification.getType();
 			
 			switch ( name )
 			{
 				case BasicTowerView.CREATE:
 					var basicTowerView = new BasicTowerView();
-					basicTowerView.init( 476,
-										 300,
+					basicTowerView.init( 174,
+										 174,
 										 72 );
 					
 					viewComponent.addChild( basicTowerView );
@@ -35,9 +38,19 @@ package com.infinitelooptd.controller
 					break;
 				case LineTowerView.CREATE:
 					var towerView = new LineTowerView();
-					towerView.init( 576,
-						400,
-						72 );
+					if (type == TowerViewMediator.SUPER)
+					{
+						towerView.init( 174,
+							558,
+							72 );
+						TowerView(towerView).power = 20;
+					}
+					else
+					{
+						towerView.init( 846,
+							174,
+							72 );
+					}
 					
 					viewComponent.addChild( towerView );
 					proxy.vo.towers.push( towerView );

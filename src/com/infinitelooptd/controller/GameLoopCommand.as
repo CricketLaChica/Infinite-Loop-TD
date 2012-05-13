@@ -14,10 +14,13 @@ package com.infinitelooptd.controller
 	{
 		override public function execute(notification:INotification):void
 		{	
-			sendNotification( BasicCreepView.MOVE );
-			sendNotification( BasicTowerView.MOVE );
-			sendNotification( LineTowerView.MOVE );
-			sendNotification( BattleView.UPDATE_TIME );
+			if (!proxy.vo.paused)
+			{
+				sendNotification( BasicCreepView.MOVE );
+				sendNotification( BasicTowerView.MOVE );
+				sendNotification( LineTowerView.MOVE );
+				sendNotification( BattleView.UPDATE_TIME );
+			}
 		}
 		
 		private function get proxy():GameProxy

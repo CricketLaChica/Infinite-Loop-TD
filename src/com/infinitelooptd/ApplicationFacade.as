@@ -3,10 +3,13 @@ package com.infinitelooptd
 	import com.infinitelooptd.controller.CreateCreepCommand;
 	import com.infinitelooptd.controller.CreateTowerCommand;
 	import com.infinitelooptd.controller.GameLoopCommand;
+	import com.infinitelooptd.controller.GamePauseCommand;
+	import com.infinitelooptd.controller.GameResetCommand;
 	import com.infinitelooptd.controller.KillCreepCommand;
 	import com.infinitelooptd.controller.StartupCommand;
 	import com.infinitelooptd.view.component.BasicCreepView;
 	import com.infinitelooptd.view.component.BasicTowerView;
+	import com.infinitelooptd.view.component.BattleView;
 	import com.infinitelooptd.view.component.LineTowerView;
 	
 	import org.puremvc.as3.interfaces.IFacade;
@@ -17,7 +20,8 @@ package com.infinitelooptd
 	{
 		public static const NAME:String			= 'ApplicationFacade';
 		public static const STARTUP:String		= NAME + 'StartUp';
-		public static const GAMELOOP:String			= NAME + 'GameLoop';
+		public static const GAMELOOP:String		= NAME + 'GameLoop';
+		public static const RESET:String		= NAME + 'Reset';
 		
 		public static function getInstance():ApplicationFacade
 		{
@@ -31,6 +35,8 @@ package com.infinitelooptd
 			// Game
 			registerCommand( STARTUP, StartupCommand );
 			registerCommand( GAMELOOP, GameLoopCommand );
+			registerCommand( BattleView.PAUSE, GamePauseCommand );
+			registerCommand( RESET, GameResetCommand );
 			
 			// Creeps
 			registerCommand( BasicCreepView.CREATE, CreateCreepCommand );

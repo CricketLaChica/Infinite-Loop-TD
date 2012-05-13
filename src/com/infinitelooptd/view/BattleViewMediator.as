@@ -4,6 +4,7 @@ package com.infinitelooptd.view
 	import com.infinitelooptd.model.GameProxy;
 	import com.infinitelooptd.utils.GameUtil;
 	import com.infinitelooptd.view.component.BattleView;
+	import com.infinitelooptd.view.component.GameMenuView;
 	
 	import flash.display.BitmapData;
 	import flash.display.Shape;
@@ -20,7 +21,8 @@ package com.infinitelooptd.view
 		public static const NAME:String						= 'BattleViewMediator';
 
 		private var battleView:BattleView;
-		private var towerTerrain:Shape;
+		private var gameMenuView:GameMenuView;
+		private var _towerTerrain:Shape;
 
 		[Bindable]
 		[Embed(source="/assets/graphics/grass.jpg")]
@@ -40,7 +42,7 @@ package com.infinitelooptd.view
 			battleView = new BattleView();
 			battleView.hud.time.text = "0hr, 0min, 23sec";
 			viewComponent.addChild( battleView );
-
+			
 			towerTerrain = createTowerTerrain();
 			viewComponent.addChild( towerTerrain );
 
@@ -53,6 +55,12 @@ package com.infinitelooptd.view
 			
 			viewComponent.addEventListener( Event.ENTER_FRAME, doGameLoop );
 			viewComponent.addEventListener( MouseEvent.MOUSE_MOVE, doMouseGrid );
+			
+			gameMenuView = new GameMenuView();
+			viewComponent.addChild( gameMenuView );
+			
+			// Reset timer
+			proxy.vo.time_start = getTimer();
 		}
 
 		// Custom functions
@@ -121,6 +129,11 @@ package com.infinitelooptd.view
 				BattleView.UPDATE,
 				BattleView.UPDATE_TIME,
 				BattleView.ADD_GOLD,
+				BattleView.SHOW_MENU,
+				BattleView.HIDE_MENU,
+				GameMenuView.SHOW,
+				GameMenuView.HIDE,
+				GameMenuView.RESET,
 			];
 		}
 		
@@ -141,6 +154,21 @@ package com.infinitelooptd.view
 					proxy.vo.gold += body;
 					battleView.hud.gold.text = proxy.vo.gold; 
 					break;
+				case BattleView.SHOW_MENU:
+					battleView.showGameMenu();
+					break;
+				case BattleView.HIDE_MENU:
+					battleView.hideGameMenu();
+					break;
+				case GameMenuView.SHOW:
+					gameMenuView.show();
+					break;
+				case GameMenuView.HIDE:
+					gameMenuView.hide();
+					break;
+				case GameMenuView.RESET:
+					this.dispose();
+					break;
 			}
 		}
 		
@@ -148,5 +176,32 @@ package com.infinitelooptd.view
 		{
 			return facade.retrieveProxy( GameProxy.NAME ) as GameProxy;
 		}
+		
+		public function dispose():void
+		{
+			sendNotification( ApplicationFacade.RESET, viewComponent );
+			viewComponent.removeChild( towerTerrain );
+			viewComponent.removeChild( gameMenuView );
+			viewComponent.removeChild( battleView );
+			
+			viewComponent.removeEventListener( Event.ENTER_FRAME, doGameLoop );
+			viewComponent.removeEventListener( MouseEvent.MOUSE_MOVE, doMouseGrid );
+			
+			facade.removeMediator( CreepViewMediator.NAME );
+			facade.removeMediator( TowerViewMediator.NAME );
+			
+			facade.removeMediator( NAME );
+		}
+
+		public function get towerTerrain():Shape
+		{
+			return _towerTerrain;
+		}
+
+		public function set towerTerrain(value:Shape):void
+		{
+			_towerTerrain = value;
+		}
+
 	}
 }

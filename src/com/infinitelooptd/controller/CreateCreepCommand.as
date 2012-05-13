@@ -1,9 +1,8 @@
 package com.infinitelooptd.controller
 {
-	import com.infinitelooptd.model.DataProxy;
 	import com.infinitelooptd.model.GameProxy;
+	import com.infinitelooptd.utils.Time;
 	import com.infinitelooptd.view.component.BasicCreepView;
-	import com.infinitelooptd.view.component.CreepView;
 	
 	import flash.geom.Point;
 	
@@ -30,7 +29,7 @@ package com.infinitelooptd.controller
 					viewComponent.addChild( basicCreepView );
 					proxy.vo.creeps.push( basicCreepView );
 					
-					trace('[CreepViewMediator] Created a new BasicCreepView.');
+					trace('[CreepViewMediator] Created a new BasicCreepView!');
 					break;
 			}
 		}

@@ -60,22 +60,22 @@ package com.infinitelooptd.view.component
 			{
 				case 90:
 					// Going down
-					this.y += this.speed * Time.deltaTime;
+					this.y += 5; //this.speed * Time.deltaTime;
 					break;
 				case 180:
 					// Going left
-					this.x -= this.speed * Time.deltaTime;
+					this.x -= 5; //this.speed * Time.deltaTime;
 					break;
 				case 270:
 					// Going up
-					this.y -= this.speed * Time.deltaTime;
+					this.y -= 5; //this.speed * Time.deltaTime;
 					break;
 				default:
 					// Going right
-					this.x += this.speed * Time.deltaTime;
+					this.x += 5; //this.speed * Time.deltaTime;
 					break;
 			}
-			
+
 			specificMove();
 		}
 		

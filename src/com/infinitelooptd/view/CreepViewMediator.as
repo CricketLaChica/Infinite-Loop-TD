@@ -1,7 +1,6 @@
 package com.infinitelooptd.view
 {
 	import com.infinitelooptd.model.GameProxy;
-	import com.infinitelooptd.utils.Time;
 	import com.infinitelooptd.view.component.BasicCreepView;
 	import com.infinitelooptd.view.component.CreepView;
 	
@@ -25,11 +24,13 @@ package com.infinitelooptd.view
 		
 		override public function onRegister():void
 		{
-			sendNotification( BasicCreepView.CREATE, viewComponent );
+			// sendNotification( BasicCreepView.CREATE, viewComponent );
 			
 			_creepCreator = new Timer(1000);
 			_creepCreator.addEventListener(TimerEvent.TIMER, addCreep);
 			_creepCreator.start();
+			
+			proxy.vo.timers.push(_creepCreator);
 		}
 		
 		protected function addCreep(event:TimerEvent):void

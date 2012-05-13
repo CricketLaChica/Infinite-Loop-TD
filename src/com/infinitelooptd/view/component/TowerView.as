@@ -70,7 +70,7 @@ package com.infinitelooptd.view.component
 		protected function enableMove(event:MouseEvent):void
 		{
 			this.allowMove = true;
-			this.power+=1;
+			// this.power+=1;
 
 			ApplicationFacade.getInstance().retrieveMediator(BattleViewMediator.NAME).getViewComponent().addChildAt(proxy.vo.grid, ApplicationFacade.getInstance().retrieveMediator(BattleViewMediator.NAME).getViewComponent().getChildIndex(this));
 		}

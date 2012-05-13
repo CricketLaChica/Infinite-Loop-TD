@@ -1,11 +1,12 @@
 package com.infinitelooptd.view.component
 {
-	import com.greensock.TweenMax;
-	import com.greensock.easing.Sine;
+	import com.infinitelooptd.ApplicationFacade;
+	import com.infinitelooptd.view.BattleViewMediator;
 	
 	import flash.display.Shape;
-	import flash.events.MouseEvent;
 	import flash.geom.Point;
+	
+	import org.puremvc.as3.patterns.facade.Facade;
 
 	public class BasicTowerView extends TowerView
 	{
@@ -16,8 +17,11 @@ package com.infinitelooptd.view.component
 		public static const TURN:String			= NAME + 'Turn';
 		public static const DESTROY:String		= NAME + 'Destroy';
 		
-		private var bullets:Vector.<Shape>;
-		private var bullet:Shape;
+		private var bullets:Vector.<BulletView>;
+		private var bullet:BulletView;
+		
+		private var reloadTime:int 				= 15;
+		private var localTime:Number;
 		
 		public function BasicTowerView()
 		{
@@ -29,7 +33,8 @@ package com.infinitelooptd.view.component
 			this.turret.rotation = this.turretRotation;
 			this.power = 10;
 
-			bullets = new Vector.<Shape>();
+			bullets = new Vector.<BulletView>();
+			localTime = 301;
 		}
 		
 		override protected function specificMove():void
@@ -56,57 +61,51 @@ package com.infinitelooptd.view.component
 					
 					this.turret.rotation = this.turretRotation;
 					
-					var localCreep = this.globalToLocal( new Point(creep.x, creep.y) );
-					
-					bullet = getBullet(localCreep);
-					TweenMax.to( bullet, 1, {x: localCreep.x, y: localCreep.y} );
-					
-					if (bullet.hitTestObject(creep))
+					if (localTime > reloadTime)
 					{
-						creep.hitBy(this.power);
+						var localCreep = this.globalToLocal( new Point(creep.x, creep.y) );
+						shoot(localCreep);
+					}
+				}
+			}
+			
+			// Check bullets
+			for each (bullet in bullets) 
+			{
+				var terrain:Shape = BattleViewMediator(ApplicationFacade.getInstance().retrieveMediator( BattleViewMediator.NAME )).towerTerrain;
+				if ( !bullet.hitTestObject(terrain) ) {
+					removeBullet(bullet);
+					continue;
+				}
+				
+				for (var k:int = 0; k < proxy.vo.creeps.length; k++) 
+				{
+					if (bullet.hitTestObject(proxy.vo.creeps[k]))
+					{
+						proxy.vo.creeps[k].hitBy(bullet.damage);
 						removeBullet(bullet);
 					}
 				}
-				else
-				{
-					bullet = getBullet();
-					removeBullet(bullet);
-				}
+				
+				bullet.update();
 			}
-			else
-			{
-				bullet = getBullet();
-				bullet.graphics.clear();
-			}
+			
+			localTime++;
 		}
 		
-		private function getBullet(localCreep:Point = null):Shape
+		private function shoot(creep:Point):void 
 		{
-			if (bullets.length < 1)
-			{
-				var bullet = new Shape();
-				this.addChildAt( bullet, 0 );
-				
-				bullet.graphics.lineStyle(1, 0xFF0000, 1);
-				bullet.graphics.beginFill(0x000000,1); 
-				bullet.graphics.drawCircle(0, 0, 5);
-				bullet.graphics.endFill();
-				
-				bullets.push( bullet );
-				
-				TweenMax.to( bullet, 0.5, {x: localCreep.x, y: localCreep.y, ease: Sine.easeIn, onComplete:removeBullet, onCompleteParams:[bullet]} );
-				
-				return bullet;
-			}
-			else
-			{
-				return bullets[0];
-			}
+			var localPosition = this.globalToLocal( new Point( this.x, this.y ) );
+			bullet = new BulletView(this.turretRotation);
+			bullet.x = localPosition.x + Math.cos((this.turretRotation + 180) * Math.PI / 180) * 50;
+			bullet.y = localPosition.y + Math.sin((this.turretRotation + 180) * Math.PI / 180) * 50;
+			bullets.push(bullet);
+			addChild(bullet);
+			localTime = 0;
 		}
 		
-		public function removeBullet(bullet:Shape):void
+		public function removeBullet(bullet:BulletView):void
 		{
-			trace("removing bullet");
 			bullets.splice( bullets.indexOf(bullet), 1 );
 			this.removeChild(bullet);
 			bullet = null;

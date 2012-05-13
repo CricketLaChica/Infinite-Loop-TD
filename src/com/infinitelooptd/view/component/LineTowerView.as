@@ -1,7 +1,6 @@
 package com.infinitelooptd.view.component
 {
 	import flash.display.MovieClip;
-	import flash.events.MouseEvent;
 
 	public class LineTowerView extends TowerView
 	{

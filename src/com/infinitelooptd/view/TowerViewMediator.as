@@ -12,6 +12,7 @@ package com.infinitelooptd.view
 	public class TowerViewMediator extends Mediator implements IMediator
 	{
 		public static const NAME:String		= 'TowerViewMediator';
+		public static const SUPER:String	= NAME + 'SuperTower';
 		
 		private var towers:Vector.<TowerView>;
 		
@@ -26,6 +27,7 @@ package com.infinitelooptd.view
 			
 			sendNotification( BasicTowerView.CREATE, viewComponent );
 			sendNotification( LineTowerView.CREATE, viewComponent );
+			sendNotification( LineTowerView.CREATE, viewComponent, SUPER );
 		}
 		
 		override public function listNotificationInterests():Array

@@ -14,7 +14,8 @@ package com.infinitelooptd.view
 		
 		override public function onRegister():void
 		{
-			facade.registerMediator( new BattleViewMediator( viewComponent ) );
+			//facade.registerMediator( new BattleViewMediator( viewComponent ) );
+			facade.registerMediator( new TitleViewMediator( viewComponent ) );
 		}
 	}
 }
