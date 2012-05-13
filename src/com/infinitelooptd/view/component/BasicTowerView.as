@@ -35,6 +35,7 @@ package com.infinitelooptd.view.component
 
 			bullets = new Vector.<BulletView>();
 			localTime = 301;
+			range = 2;
 		}
 		
 		override protected function specificMove():void

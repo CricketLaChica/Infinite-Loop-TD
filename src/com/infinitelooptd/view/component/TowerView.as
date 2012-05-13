@@ -28,6 +28,8 @@ package com.infinitelooptd.view.component
 		
 		public function init( posX:Number = 0, posY:Number = 0, rotation:Number = 0 ):void
 		{
+			specificInit();
+			
 			this.x = posX;
 			this.y = posY;
 			this.turretRotation = rotation;
@@ -48,8 +50,6 @@ package com.infinitelooptd.view.component
 			this.addEventListener(MouseEvent.MOUSE_MOVE, moveTower);
 			this.addEventListener(MouseEvent.MOUSE_OVER, showRange);
 			this.addEventListener(MouseEvent.MOUSE_OUT, hideRange);
-			
-			specificInit();
 		}
 		
 		public function specificInit():void

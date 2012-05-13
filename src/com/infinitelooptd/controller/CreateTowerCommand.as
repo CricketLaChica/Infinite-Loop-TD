@@ -27,8 +27,8 @@ package com.infinitelooptd.controller
 			{
 				case BasicTowerView.CREATE:
 					var basicTowerView = new BasicTowerView();
-					basicTowerView.init( 174,
-										 174,
+					basicTowerView.init( 270,
+										 270,
 										 72 );
 					
 					viewComponent.addChild( basicTowerView );
