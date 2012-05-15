@@ -1,13 +1,11 @@
 package com.infinitelooptd.controller
 {
-	import com.infinitelooptd.model.DataProxy;
 	import com.infinitelooptd.model.GameProxy;
 	import com.infinitelooptd.view.component.BasicCreepView;
 	import com.infinitelooptd.view.component.BattleView;
 	import com.infinitelooptd.view.component.CreepView;
 	
 	import flash.display.MovieClip;
-	import flash.geom.Point;
 	
 	import org.puremvc.as3.interfaces.ICommand;
 	import org.puremvc.as3.interfaces.INotification;

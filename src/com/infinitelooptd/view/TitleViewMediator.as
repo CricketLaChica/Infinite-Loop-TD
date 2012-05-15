@@ -34,17 +34,6 @@ package com.infinitelooptd.view
 
 			trace('[TitleViewMediator] Created a new TitleView.');
 		}
-
-//		protected function doGameLoop(event:Event):void
-//		{
-//			sendNotification( ApplicationFacade.GAMELOOP );
-//		}
-//		
-//		protected function doMouseGrid(event:MouseEvent):void
-//		{
-//			proxy.vo.grid.x = GameUtil.constrainGridX(Math.floor((event.stageX - proxy.vo.margin.x) / 96) * 96) + proxy.vo.margin.x;
-//			proxy.vo.grid.y = GameUtil.constrainGridY(Math.floor((event.stageY - proxy.vo.margin.y) / 96) * 96) + proxy.vo.margin.y;
-//		}
 		
 		// MVC stuff
 		override public function listNotificationInterests():Array

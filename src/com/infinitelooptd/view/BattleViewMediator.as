@@ -40,7 +40,6 @@ package com.infinitelooptd.view
 		override public function onRegister():void
 		{
 			battleView = new BattleView();
-			battleView.hud.time.text = "0hr, 0min, 23sec";
 			viewComponent.addChild( battleView );
 			
 			towerTerrain = createTowerTerrain();

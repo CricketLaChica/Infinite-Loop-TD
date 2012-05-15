@@ -1,15 +1,10 @@
 package com.infinitelooptd.controller
 {
-	import com.infinitelooptd.model.DataProxy;
 	import com.infinitelooptd.model.GameProxy;
-	import com.infinitelooptd.view.ApplicationMediator;
 	import com.infinitelooptd.view.TowerViewMediator;
 	import com.infinitelooptd.view.component.BasicTowerView;
-	import com.infinitelooptd.view.component.CreepView;
 	import com.infinitelooptd.view.component.LineTowerView;
 	import com.infinitelooptd.view.component.TowerView;
-	
-	import flash.display.MovieClip;
 	
 	import org.puremvc.as3.interfaces.ICommand;
 	import org.puremvc.as3.interfaces.INotification;
